@@ -13,6 +13,7 @@ from newick import load
 #transform the class format of the tree into dictionary format and add the abundance value
 def change_format(newick_tree, abundances, silent_node, prev_node):
 	tree = {}
+	global num_silent_node
 	if(newick_tree.name=="germline" or newick_tree.name=="naive"):
 		add_germline_info(tree)
 		prev_node = newick_tree.name
@@ -25,6 +26,7 @@ def change_format(newick_tree, abundances, silent_node, prev_node):
 	else :
 		add_silent_node_info (tree, newick_tree.name)
 		silent_node+=1
+		num_silent_node = num_silent_node + 1
 
 	color_index = change_index(len(colors),len(stroke_style))	#update the values of the index
 	if(newick_tree.descendants!=[]) :	
@@ -59,7 +61,7 @@ def add_germline_info (tree) :
 
 def add_silent_node_info (tree, node_name) :
 	tree["value"]=1
-	tree["name"]= node_name
+	tree["name"]="ni"+ str(num_silent_node)
 	tree["color"]="#FFFFFF"
 	tree["stroke"]="#808080"
 	tree["style"]="2,2"
@@ -176,9 +178,10 @@ def main():
 	csv_file = options.csv_file
 	colors_file = options.colors
 
-	global stroke_style, color_index
+	global stroke_style, color_index, num_silent_node
 	stroke_style = ["none", "10,10", "1,5"]
 	color_index = [0,0,0]
+	num_silent_node = 0
 	newick_tree = read_newick_file(newick_file)
 	get_tree_branches(csv_file)
 	abundances = get_abundance(fasta_file)
