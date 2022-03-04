@@ -88,7 +88,8 @@ function displayTree(dataTree){
     nodeEnter.append("path")
              .attr('class', 'nodeTree')
              .style("fill", function(d){ return d.data.color; })
-             .style("stroke", function(d){ return d.data.stroke; })
+             .style("stroke", "#000000")
+             .style("stroke-dasharray", function(d){ return d.data.name.startsWith('ni')? d.data.style : "none" })
              .style("opacity", 0.8 )
              .attr("d", d3.symbol().size(function(d) { return d.data.value? d.data.nodeSize : 0 } )
                                    .type(function(d) { if(d.data.name=="naive"){return d3.symbolTriangle;

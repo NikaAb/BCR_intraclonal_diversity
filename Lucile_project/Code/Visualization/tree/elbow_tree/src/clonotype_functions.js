@@ -4,7 +4,7 @@ function findMostAbundantClonotypes(node, table){
   //for each children of the given node 
   for(var i in node.children){
     //the node is not silent
-    if(node.children[i].data["name"][0]=="C"){
+    if(node.children[i].data["name"][0]!="n"){
       //there is already 5 clonotypes stores in the tab
       if(table.length == 5){
         //Compare the abundance of the clonotypes to those in of the clonotypes in the tab
